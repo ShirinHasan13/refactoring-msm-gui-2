@@ -11,22 +11,18 @@
 #  updated_at :datetime         not null
 #
 class Actor < ApplicationRecord
-  validates(:name, presence: true)
+  validates(:name, { :presence => true })
 
   def characters
-    key = self.id
-
-    the_many = Character.where({ :actor_id => key })
-
-    return the_many
+    matching_characters = Character.where({ :actor_id => self.id })
+    return matching_characters
   end
 
   def filmography
     the_many = Array.new
 
     self.characters.each do |joining_record|
-      destination_record = joining_record.movie
-
+      destination_record = Movie.where({ :id => joining_record.movie_id }).at(0)
       the_many.push(destination_record)
     end
 
