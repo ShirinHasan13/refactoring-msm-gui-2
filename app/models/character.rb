@@ -10,34 +10,6 @@
 #  movie_id   :integer
 #
 class Character < ApplicationRecord
-
-  belongs_to(:actor)
-
-  class Character
-    # ...
-  
-    belongs_to(:movie)
-    
-    # ...
-  end
-
-  def movie
-    key = self.movie_id
-
-    matching_set = Movie.where({ :id => key })
-
-    the_one = matching_set.at(0)
-
-    return the_one
-  end
-
-  def actor
-    key = self.actor_id
-
-    matching_set = Actor.where({ :id => key })
-
-    the_one = matching_set.at(0)
-
-    return the_one
-  end
+  belongs_to(:movie, { :class_name => "Movie", :foreign_key => "movie_id" })
+  belongs_to(:actor, { :class_name => "Actor", :foreign_key => "actor_id" })
 end

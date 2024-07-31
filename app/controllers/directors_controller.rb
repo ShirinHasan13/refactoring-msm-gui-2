@@ -5,9 +5,16 @@ class DirectorsController < ApplicationController
     render({ :template => "director_templates/index" })
   end
 
+  #def show
+    #the_id = params.fetch("path_id")
+    #@the_director = Director.find(the_id)
+
+    #render({ :template => "director_templates/show" })
+  #end
+
   def show
-    the_id = params.fetch("path_id")
-    @the_director = Director.find(the_id)
+    matching_directors = Director.where({ :id => params.fetch("id") })
+    @the_director = matching_directors.at(0)
 
     render({ :template => "director_templates/show" })
   end

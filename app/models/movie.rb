@@ -11,21 +11,17 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  director_id :integer
-#
-class Director < ApplicationRecord
-  validates(:name, { :presence => true })
 
-  class Movie
 
-   belongs_to(:character)
-     
-  end
+class Movie < ApplicationRecord
+  validates(:director_id, { :presence => true })
+  validates(:title, { :uniqueness => true })
 
-  def filmography
-    key = self.id
+  belongs_to :director, :class_name => "Director", :foreign_key => "director_id"
 
-    the_many = Movie.where({ :director_id => key })
 
-    return the_many
-  end
+  has_many(:characters, { :class_name => "Character", :foreign_key => "movie_id" })
+
+  
+
 end

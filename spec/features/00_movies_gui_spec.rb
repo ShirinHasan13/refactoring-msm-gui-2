@@ -37,16 +37,9 @@ describe "/movies" do
     initial_number_of_movies = Movie.count
     test_title = "Flubber"
 
-    director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
-    director.image = ""
-    director.save
-
     visit "/movies"
 
     fill_in "Title", with: test_title
-    fill_in "Director ID", with: director.id
     click_on "Create movie"
     final_number_of_movies = Movie.count
     expect(final_number_of_movies).to eq(initial_number_of_movies + 1)
@@ -58,16 +51,9 @@ describe "/movies" do
     initial_number_of_movies = Movie.count
     test_title = "Flubber"
 
-    director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
-    director.image = ""
-    director.save
-
     visit "/movies"
 
     fill_in "Title", with: test_title
-    fill_in "Director ID", with: director.id
     click_on "Create movie"
 
     last_movie = Movie.order(created_at: :asc).last
@@ -78,16 +64,18 @@ end
 
 describe "/movies/[ID]" do
   it "displays the title of the movie", :points => 1 do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
     movie.director_id = director.id
+    movie.year = 1999
+    movie.description = "Just a green lil' guy"
+    movie.duration = 95
     movie.save
 
     visit "/movies/#{movie.id}"
@@ -98,16 +86,18 @@ end
 
 describe "/delete_movie/[PHOTO ID]" do
   it "removes a record from the Movie table", :points => 1 do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
     movie.director_id = director.id
+    movie.year = 1999
+    movie.description = "Just a green lil' guy"
+    movie.duration = 95
     movie.save
 
     visit "/delete_movie/#{movie.id}"
@@ -118,16 +108,19 @@ end
 
 describe "/delete_movie/[PHOTO ID]" do
   it "redirects to /movies", :points => 1, hint: h("redirect_vs_render") do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
     movie.director_id = director.id
+    movie.year = 1999
+    movie.description = "Just a green lil' guy"
+    movie.duration = 95
+    movie.year = 1999
     movie.save
 
     visit "/delete_movie/#{movie.id}"
@@ -138,9 +131,19 @@ end
 
 describe "/movies/[ID]" do
   it "has at least one form", :points => 1 do
+    director = Director.new
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
+    director.image = ""
+    director.save
 
     movie = Movie.new
     movie.title = "Flubber"
+    movie.director_id = director.id
+    movie.year = 1999
+    movie.description = "Just a green lil' guy"
+    movie.duration = 95
+    movie.year = 1999
     movie.save
 
     visit "/movies/#{movie.id}"
@@ -151,16 +154,14 @@ end
 
 describe "/movies/[ID]" do
   it "has a label with text 'Image'", :points => 1, hint: h("copy_must_match label_for_input") do
-    
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
-    movie.director_id = director.id
     movie.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     movie.description = "Green guy soft"
     movie.save
@@ -173,16 +174,14 @@ end
 
 describe "/movies/[ID]" do
   it "has a button with text 'Update movie'", :points => 1, hint: h("copy_must_match label_for_input") do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
-    movie.director_id = director.id
     movie.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     movie.description = "Green guy soft"
     movie.save
@@ -195,16 +194,14 @@ end
 
 describe "/movies/[ID]" do
   it "'Update movie' form has Image prepopulated in an input element", :points => 1, hint: h("value_attribute") do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
-    movie.director_id = director.id
     movie.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     movie.description = "Green guy soft"
     movie.save
@@ -217,16 +214,14 @@ end
 
 describe "/movies/[ID]" do
   it "'Update movie' form updates Image when submitted", :points => 1, hint: h("label_for_input button_type") do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
-    movie.director_id = director.id
     movie.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     movie.description = "Green guy soft"
     movie.save
@@ -245,16 +240,14 @@ end
 
 describe "/movies/[ID]" do
   it "'Update movie' form redirects to the movie's details page when updating movie", :points => 1, hint: h("embed_vs_interpolate redirect_vs_render") do
-
     director = Director.new
-    director.name = "Travis McElroy"
-    director.dob = 38.years.ago
+    director.name = "Scout Young"
+    director.dob = 27.years.ago
     director.image = ""
     director.save
 
     movie = Movie.new
     movie.title = "Flubber"
-    movie.director_id = director.id
     movie.image = "https://some.test/image-#{Time.now.to_i}.jpg"
     movie.description = "Green guy soft"
     movie.save
